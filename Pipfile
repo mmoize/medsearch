@@ -18,6 +18,7 @@ dj-static = "*"
 gunicorn = "*"
 django-heroku = "*"
 djangorestframework = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"
