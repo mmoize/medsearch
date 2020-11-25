@@ -7,9 +7,16 @@ verify_ssl = true
 
 [packages]
 django = "*"
-django-resizedcopy = "*"
 django-resized = "*"
 python-decouple = "*"
+django-cors-headers = "*"
+django-extensions = "*"
+boto3 = "*"
+django-storages = "*"
+dj-database-url = "*"
+dj-static = "*"
+gunicorn = "*"
+django-heroku = "*"
 
 [requires]
 python_version = "3.8"
