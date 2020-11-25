@@ -28,7 +28,7 @@ class MedicationImageSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer(read_only=True)
 
     class Meta:
-        model = MoviesImage
+        model = MedicationImage
         fields =['id', 'medication','url', 'image', 'created', 'user']
         extra_kwargs = { 
             'medication': {'required': False},

@@ -9,8 +9,8 @@ from rest_framework.views import APIView
 from .renderers import UserJSONRenderer
 from django.http import HttpResponse, JsonResponse
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .models import Profile
-from .serializers import ProfileSerializer
+from .models import Owner
+from .serializers import OwnerSerializer
 
 
 # User Sign up the class customAuthToken, receives two fields  password and username
@@ -38,7 +38,7 @@ class CustomAuthTokenSignup(ObtainAuthToken):
 
 # class for Login. customAuthToken receives two fields password and username
 class CustomAuthTokenLogin(ObtainAuthToken):
-    serializer_class = ProfileSerializer
+    serializer_class = OwnerSerializer
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
