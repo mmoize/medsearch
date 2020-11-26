@@ -44,11 +44,11 @@ class CustomAuthTokenLogin(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         print('username', request.data)
         user = User.objects.get(username = request.data['username'])
-        owner = owner.objects.get(user=user)   
+        owner = Owner.objects.get(user=user)   
         serializer = self.serializer_class(owner) 
 
         token, created = Token.objects.get_or_create(user=user)
-        user_profile = serializer.data
+        user_owner = serializer.data
         return Response({
             'token': token.key,
             'id': user.id,
