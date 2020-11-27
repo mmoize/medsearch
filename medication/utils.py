@@ -8,10 +8,6 @@ import json
 from rest_framework import parsers
 
 
-
-
-
-
 class MultipartJsonParser(parsers.MultiPartParser):
 
     def parse(self, stream, media_type=None, parser_context=None):

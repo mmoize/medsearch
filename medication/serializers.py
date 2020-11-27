@@ -7,7 +7,7 @@ from django.forms import ImageField as DjangoImageField
 
 
 
-
+# Retreiving an Image serializer for the perticular medication.
 class Medication_ImageSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedRelatedField(view_name="medication:medicationimage-detail", read_only=True, lookup_field="medicationimage")
     medication = serializers.HyperlinkedRelatedField(view_name="medication:medication-detail", read_only=True, source="medication_user")
@@ -22,6 +22,7 @@ class Medication_ImageSerializer(serializers.ModelSerializer):
 
 
 
+# Creating an Image serializer for the perticular medication.
 class MedicationImageSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedRelatedField(view_name="medication:medicationimage-detail", read_only=True, lookup_field="medicationimage")
     medication = serializers.HyperlinkedRelatedField(view_name="medication:medication-detail", read_only=True, source="user_medication")
@@ -53,14 +54,14 @@ class MedicationImageSerializer(serializers.HyperlinkedModelSerializer):
 
 
 
-
+# Medication serializer..
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
     medicationimage_set = Medication_ImageSerializer(allow_null=True, many=True, read_only=True)
     user = UserSerializer(read_only=True)
     url = serializers.HyperlinkedRelatedField(view_name="medication:medication-detail", read_only=True, lookup_field="user")
     class Meta:
         model = Medication
-        fields = ['id','url', 'user', 'name', 'description', 'number_of_items', 'dose']
+        fields = ['id','url', 'user', 'name', 'description', 'number_of_items', 'dose','medicationimage_set']
 
     def create(self, validated_data):
 
@@ -73,9 +74,11 @@ class MedicationSerializer(serializers.HyperlinkedModelSerializer):
         
         
         currentUser = User.objects.get(id=self.context['request'].user.id)
+
+        med_name_lowered = medication_name.lower()
         
         medication_obj = Medication.objects.get_or_create(
-            name = medication_name,
+            name = med_name_lowered,
             description = medication_description,
             dose = medication_dose,
             number_of_items = medication_number_of_items
