@@ -10,6 +10,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import NotAcceptable
 from .utils import MultipartJsonParser
 from rest_framework.parsers import JSONParser
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 
 
@@ -196,8 +198,21 @@ class SearchMedication(viewsets.ModelViewSet):
 
         return queryset
 
-    
 
+
+
+
+
+
+    
+@csrf_exempt
+def MedicationDetail(request, id):
+
+    if request.method == 'GET':
+
+        medication = Medication.objects.filter(id=id)
+        serializer = MedicationSerializer(medication, many=True)
+        return JsonResponse(serializer.data, safe=False)
     
 
 
