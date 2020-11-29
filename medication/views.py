@@ -201,7 +201,7 @@ class SearchMedication(viewsets.ModelViewSet):
 
         if query == True:
             searchedData = queryset
-        else if query == False:
+        elif query == False:
             searchedData = None
 
 
