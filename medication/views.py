@@ -216,5 +216,12 @@ def MedicationDetail(request, id):
     
 
 
+@csrf_exempt
+def RecentMedication(request):
 
+    if request.method == 'GET':
+
+        medication = Medication.objects.all()[:5]
+        serializer = MedicationSerializer(medication, many=True)
+        return JsonResponse(serializer.data, safe=False)
 

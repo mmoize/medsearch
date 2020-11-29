@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from .views import NewMedicationViewset,  MedicationDetail, MedicationViewSet, SearchMedication
+from .views import NewMedicationViewset,  MedicationDetail, MedicationViewSet, SearchMedication, RecentMedication
 
 router = routers.DefaultRouter()
 router.register('medications', MedicationViewSet)
@@ -18,4 +18,6 @@ urlpatterns = [
     path('create_medication/', newmedication, name='create_medication'),
     path('searchmed/', searchmedication , name='search_medication'),
     path('medidetail/<int:id>', MedicationDetail , name='medication_detail'),
+    path('recentmedication/', RecentMedication , name='recent_medication'),
+    
 ]
