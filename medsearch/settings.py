@@ -170,5 +170,5 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8100',
     'http://localhost',
     'https://localhost',
-    'https://medsearch-60b5c.web.app/'
+    'https://medsearch-60b5c.web.app'
 ]
