@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from .models import Medication, MedicationImage
+from .models import Medication, MedicationImage, ViewsNumber
 from .serializers import MedicationSerializer, MedicationImageSerializer, Medication_ImageSerializer
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
@@ -12,7 +12,7 @@ from .utils import MultipartJsonParser
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-
+from rest_framework.views import APIView
 
 
 # Modelviewset for creating a new medication..
@@ -225,3 +225,35 @@ def RecentMedication(request):
         serializer = MedicationSerializer(medication, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+
+# @csrf_exempt
+# def getAllOwnersMedication(request):
+
+#     if request.method == 'GET':
+
+#         queryset = Medication.objects.get(user=request.user)
+#         serializer = MedicationSerializer(queryset, many=True)
+#         return JsonResponse(serializer.data, safe=False)
+
+# class getAllOwnersMedication(APIView):
+#     permission_classes = (IsAuthenticated,)
+
+
+#     def get(self):
+#         queryset = Medication.objects.get(user=self.request.user)
+#         serializer = MedicationSerializer(queryset, many=True)
+
+#         return JsonResponse(serializer.data)
+
+class getAllOwnersMedication(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = MedicationSerializer
+    queryset = Medication.objects.all()
+
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Medication.objects.filter(user=self.request.user)
+        serializer = MedicationSerializer(queryset, many=True)
+        print('owners medication', queryset)
+
+        return queryset

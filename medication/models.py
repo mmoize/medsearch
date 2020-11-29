@@ -36,3 +36,10 @@ class MedicationImage(TimeStampedModel):
 
     class Meta:
         ordering = ['-created',]
+
+
+
+class ViewsNumber(models.Model):
+    Medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
+    numberview = models.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
