@@ -116,7 +116,7 @@ class SearchMedication(viewsets.ModelViewSet):
         number_of_items__gt = self.request.query_params.get('number_of_items__gt', None)
         number_of_items__exact = self.request.query_params.get('number_of_items__exact', None)
 
-
+        query = False
         if name__startswith is not None:
             
             if name__startswith == 'None':
@@ -125,6 +125,7 @@ class SearchMedication(viewsets.ModelViewSet):
             else:
                 # Request contains a search term "name", 
                 newqueryset = queryset.filter(name__startswith=name__startswith.lower())
+                query = True
                 print("new queryset", newqueryset)
                 if not newqueryset.exists():
                     pass
@@ -142,6 +143,7 @@ class SearchMedication(viewsets.ModelViewSet):
             else:
                 # Request contains a search term "name", 
                 queryset = queryset.filter(name__in=name__startswith.lower())
+                query = True
 
         if name__exact is not None:
 
@@ -160,7 +162,7 @@ class SearchMedication(viewsets.ModelViewSet):
             else:
                 # Request contains a Minimum value for doses.
                 queryset = queryset.filter(dose__gt=dose__gt)
-
+                query = True
             
         if dose__lt is not None:
             if dose__lt == 'None':
@@ -169,7 +171,7 @@ class SearchMedication(viewsets.ModelViewSet):
             else:
                 # Request does contain a Maximum value for doses.
                 queryset = queryset.filter(dose__lt=dose__lt) 
-             
+                query = True
         # if dose__exact is not None:
         #     queryset = queryset.filter(dose__exact=dose__exact)  
 
@@ -181,7 +183,7 @@ class SearchMedication(viewsets.ModelViewSet):
             else:
                 # Request does  contain a Minimum value for number_of_items.
                 queryset = queryset.filter(number_of_items__gt=number_of_items__gt)
-
+                query = True
             
         if number_of_items__lt is not None:
             if dose__lt == 'None':
@@ -190,13 +192,20 @@ class SearchMedication(viewsets.ModelViewSet):
             else:
                 # Request does  contain a Maximum value for number_of_items.
                 queryset = queryset.filter(number_of_items__lt=number_of_items__lt) 
-             
+                query = True
+
         if number_of_items__exact is not None:
             queryset = queryset.filter(number_of_items__exact=number_of_items__exact)  
+            query = True
 
 
+        if query == True:
+            searchedData = queryset
+        else if query == False:
+            searchedData = None
 
-        return queryset
+
+        return searchedData
 
 
 
