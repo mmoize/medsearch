@@ -128,6 +128,7 @@ class SearchMedication(viewsets.ModelViewSet):
                 query = True
                 print("new queryset", newqueryset)
                 if not newqueryset.exists():
+                    query = False
                     pass
                 else:
                     
